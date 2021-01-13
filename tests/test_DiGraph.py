@@ -1,6 +1,6 @@
 import unittest
 
-from src.DiGraph import DiGraph
+from ex3.src.DiGraph import DiGraph
 
 
 class TestDiGraph(unittest.TestCase):

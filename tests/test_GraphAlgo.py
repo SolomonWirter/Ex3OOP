@@ -1,7 +1,7 @@
 import unittest
 
-from src.DiGraph import DiGraph
-from src.GraphAlgo import GraphAlgo
+from ex3.src.DiGraph import DiGraph
+from ex3.src.GraphAlgo import GraphAlgo
 
 
 class test_GraphAlgo(unittest.TestCase):
@@ -29,7 +29,7 @@ class test_GraphAlgo(unittest.TestCase):
         g.add_edge(5, 3, 3.4)
         g.add_edge(5, 6, 1)
         g.add_edge(6, 7, 5)
-        g.add_edge(7, 8, 4.8)   # 4.8 fails  exp 37.4
+        g.add_edge(7, 8, 4.8)  # 4.8 fails  exp 37.4
         g.add_edge(8, 6, 1.9)
         g.add_edge(8, 9, 12)
 
