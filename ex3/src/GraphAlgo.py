@@ -135,6 +135,11 @@ class GraphAlgo(GraphAlgoInterface):
         plt.show()
 
     def Dijkstra(self, src):
+        """
+        Dijkstra Algorithm :
+        Traverse the Graph from Source Node and tag each reachable Node with the MinSum Weight
+        Use's for Shortest_Path
+        """
         for vertex in self.graph.Nodes.values():
             vertex.tag = float('infinity')
         self.graph.Nodes.get(src).tag = 0
@@ -154,6 +159,15 @@ class GraphAlgo(GraphAlgoInterface):
         return
 
     def Kosaraju(self, src):
+        """
+        This Algorithm is for finding all SCC in the graph -> Use on all Vertices
+        Work this way ->
+        DFS on the Graph - Contain a list of all reachable Vertices from Source Node
+        Graph^T = Transpose Original Graph
+        DFS on the Graph^T - Contain a list of all reachable Vertices from Source Node (On Graph^T)
+
+        :return An Intersection between both lists - > The Source Node SCC
+        """
         s = [src]
         visited = {}
         while len(s) > 0:  # DFS Graph

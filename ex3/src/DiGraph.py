@@ -36,13 +36,7 @@ class DiGraph(GraphInterface):
 
         if src in self.Nodes.keys() and dst in self.Nodes.keys():
             if src in self.EdgesDst[dst] and dst in self.EdgesSrc[src]:
-                if self.EdgesSrc[src][dst].weight != weight:
-                    self.EdgesSrc[src][dst] = src_e
-                    self.EdgesDst[dst][src] = dest_e
-                    self.modeCount += 1
-                    return True
-                else:
-                    return False
+                return False
             else:
                 self.EdgesSrc[src][dst] = src_e
                 self.EdgesDst[dst][src] = dest_e
@@ -53,95 +47,104 @@ class DiGraph(GraphInterface):
 
         return False
 
-    def add_node(self, node_id: int, pos: tuple = None) -> bool:
 
-        if node_id in self.Nodes.keys():
-            return False
-
-        self.Nodes[node_id] = NodeData(node_id, pos=pos)  # NeedFix
-        self.EdgesSrc[node_id] = {}
-        self.EdgesDst[node_id] = {}
-
-        self.v_Size += 1
-        self.modeCount += 1
-        return True
-
-    def remove_node(self, node_id: int) -> bool:
-        if node_id not in self.Nodes.keys():
-            return False
-
-        for edge in self.EdgesDst.get(node_id).keys():
-            self.EdgesSrc.get(edge).pop(node_id)
-            self.e_Size -= 1
-
-        for edge in self.EdgesSrc.get(node_id).keys():
-            self.EdgesDst.get(edge).pop(node_id)
-            self.e_Size -= 1
-
-        self.EdgesSrc.pop(node_id)
-        self.Nodes.pop(node_id)
-        self.EdgesDst.pop(node_id)
-        self.v_Size -= 1
-        self.modeCount += 1
-        return True
-
-    def remove_edge(self, node_id1: int, node_id2: int) -> bool:
-        if node_id1 in self.Nodes.keys() and node_id2 in self.Nodes.keys():
-            if node_id1 in self.EdgesDst[node_id2] and node_id2 in self.EdgesSrc[node_id1]:
-                self.EdgesSrc[node_id1].pop(node_id2)
-                self.EdgesDst[node_id2].pop(node_id1)
-                self.e_Size -= 1
-                self.modeCount += 1
-            else:
-                return False
+def add_node(self, node_id: int, pos: tuple = None) -> bool:
+    if node_id in self.Nodes.keys():
         return False
 
-    def get_all_v(self) -> dict:
-        return self.Nodes.values()
+    self.Nodes[node_id] = NodeData(node_id, pos=pos)  # NeedFix
+    self.EdgesSrc[node_id] = {}
+    self.EdgesDst[node_id] = {}
 
-    def all_in_edges_of_node(self, id1: int) -> dict:
-        if id1 not in self.Nodes.keys():
-            return
+    self.v_Size += 1
+    self.modeCount += 1
+    return True
 
-        return self.EdgesDst[id1]
 
-    def all_out_edges_of_node(self, id1: int) -> dict:
-        if id1 not in self.Nodes.keys():
-            return
+def remove_node(self, node_id: int) -> bool:
+    if node_id not in self.Nodes.keys():
+        return False
 
-        return self.EdgesSrc[id1]
+    for edge in self.EdgesDst.get(node_id).keys():
+        self.EdgesSrc.get(edge).pop(node_id)
+        self.e_Size -= 1
 
-    def __str__(self):
-        string = "\n"
-        for vertex in self.Nodes.values():
-            string += f"Key: {vertex} \n"
-            string += "Edges To:  \n["
-            for edge in self.EdgesSrc[vertex.key].values():
-                string += f"{vertex.key} -> ({edge.dst}) W: ~{edge.weight}~, "
-            string += "]\nEdges From: \n["
-            for edge in self.EdgesDst[vertex.key].values():
-                string += f"{vertex.key} <- ({edge.dst}), "
-            string += "]\n"
+    for edge in self.EdgesSrc.get(node_id).keys():
+        self.EdgesDst.get(edge).pop(node_id)
+        self.e_Size -= 1
 
-        return string
+    self.EdgesSrc.pop(node_id)
+    self.Nodes.pop(node_id)
+    self.EdgesDst.pop(node_id)
+    self.v_Size -= 1
+    self.modeCount += 1
+    return True
 
-    def __repr__(self):
-        string = "\n"
-        for vertex in self.Nodes.values():
-            string += f"Key: {vertex} \n"
-            string += "Edges To:  \n["
-            for edge in self.EdgesSrc[vertex.key].values():
-                string += f"{vertex.key} -> ({edge.dst}) W: ~{edge.weight}~, "
-            string += "]\nEdges From: \n["
-            for edge in self.EdgesDst[vertex.key].values():
-                string += f"{vertex.key} <- ({edge.dst}), "
-            string += "]\n"
 
-        return string
+def remove_edge(self, node_id1: int, node_id2: int) -> bool:
+    if node_id1 in self.Nodes.keys() and node_id2 in self.Nodes.keys():
+        if node_id1 in self.EdgesDst[node_id2] and node_id2 in self.EdgesSrc[node_id1]:
+            self.EdgesSrc[node_id1].pop(node_id2)
+            self.EdgesDst[node_id2].pop(node_id1)
+            self.e_Size -= 1
+            self.modeCount += 1
+        else:
+            return False
+    return False
+
+
+def get_all_v(self) -> dict:
+    return self.Nodes.values()
+
+
+def all_in_edges_of_node(self, id1: int) -> dict:
+    if id1 not in self.Nodes.keys():
+        return
+
+    return self.EdgesDst[id1]
+
+
+def all_out_edges_of_node(self, id1: int) -> dict:
+    if id1 not in self.Nodes.keys():
+        return
+
+    return self.EdgesSrc[id1]
+
+
+def __str__(self):
+    string = "\n"
+    for vertex in self.Nodes.values():
+        string += f"Key: {vertex} \n"
+        string += "Edges To:  \n["
+        for edge in self.EdgesSrc[vertex.key].values():
+            string += f"{vertex.key} -> ({edge.dst}) W: ~{edge.weight}~, "
+        string += "]\nEdges From: \n["
+        for edge in self.EdgesDst[vertex.key].values():
+            string += f"{vertex.key} <- ({edge.dst}), "
+        string += "]\n"
+
+    return string
+
+
+def __repr__(self):
+    string = "\n"
+    for vertex in self.Nodes.values():
+        string += f"Key: {vertex} \n"
+        string += "Edges To:  \n["
+        for edge in self.EdgesSrc[vertex.key].values():
+            string += f"{vertex.key} -> ({edge.dst}) W: ~{edge.weight}~, "
+        string += "]\nEdges From: \n["
+        for edge in self.EdgesDst[vertex.key].values():
+            string += f"{vertex.key} <- ({edge.dst}), "
+        string += "]\n"
+
+    return string
 
 
 class Point3D:
-
+    """
+    An Object to Contain a Position in R^3 space
+    """
     def __init__(self, pos: tuple = (0, 0, 0)):
         self.pos = pos
 
@@ -156,7 +159,9 @@ class Point3D:
 
 
 class NodeData:
-
+    """
+    An Object to Contain the vertices in a Graph (Key,Position)
+    """
     def __init__(self, key, pos: Point3D = None):
         self.pos = pos
         self.key = key
@@ -174,7 +179,9 @@ class NodeData:
 
 
 class EdgeData:
-
+    """
+    An Object to Contain the edges in a Graph  src->dst(w)
+    """
     def __init__(self, src: int, dst: int, weight):
         self.src = src
         self.dst = dst
